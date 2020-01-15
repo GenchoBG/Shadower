@@ -11,4 +11,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shadower.Data\Shadower.Data.csproj" />
+    <ProjectReference Include="..\Shadower.Services\Shadower.Services.csproj" />
+  </ItemGroup>
+
 </Project>

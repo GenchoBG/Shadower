@@ -4,10 +4,8 @@ namespace Shadower.Data
 {
     public class ShadowerDbContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public ShadowerDbContext(DbContextOptions options) : base(options)
         {
-            optionsBuilder.UseSqlServer(@"Server=.;Database=ShadowerDb;Integrated Security=True;");
-            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

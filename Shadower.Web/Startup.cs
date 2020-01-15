@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shadower.Data;
+using Shadower.Services;
 
 namespace Shadower.Web
 {
@@ -16,7 +14,7 @@ namespace Shadower.Web
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -31,6 +29,13 @@ namespace Shadower.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services
+                .AddEntityFrameworkSqlServer()
+                .AddDbContext<ShadowerDbContext>((serviceProvider, options) =>
+                    options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"))
+                        .UseInternalServiceProvider(serviceProvider));
+
+            services.AddTransient<IPostService, PostService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
