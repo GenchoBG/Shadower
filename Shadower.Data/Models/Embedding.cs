@@ -15,6 +15,6 @@ namespace Shadower.Data.Models
         [Required]
         public Face Face { get; set; }
 
-        public ICollection<EmbeddingValue> Values { get; set; }
+        public ICollection<EmbeddingValue> Values { get; set; } = new HashSet<EmbeddingValue>();
     }
 }
