@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Shadower.Data;
 using Shadower.Data.Models;
 
@@ -87,7 +88,7 @@ namespace Shadower.Services
                 return (null, double.MaxValue);
             }
             
-            var mostSimilar = this.db.Embeddings.OrderBy(e =>
+            var mostSimilar = this.db.Embeddings.Include(e => e.Values).ToList().OrderBy(e =>
                 this.EucledianDistance(embedding, e))
                 .First();
 
@@ -96,7 +97,9 @@ namespace Shadower.Services
 
         private double EucledianDistance(IList<double> embedding1, Embedding embedding2)
         {
-            return this.EucledianDistance(embedding1, embedding2.Values.OrderBy(v => v.Index).Select(v => v.Value).ToList());
+            var values = embedding2.Values.OrderBy(v => v.Index).Select(v => v.Value).ToList();
+
+            return this.EucledianDistance(embedding1, values);
         }
 
         private double EucledianDistance(IList<double> embedding1, IList<double> embedding2)

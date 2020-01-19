@@ -24,9 +24,10 @@ namespace Shadower.Web.Controllers
             return this.View();
         }
 
-        public IActionResult SearchFace(IList<double> embedding)
+        [HttpPost]
+        public IActionResult SearchFace(FaceSearchModel model)
         {
-            var posts = this.postService.FindPostsByEmbedding(embedding);
+            var posts = this.postService.FindPostsByEmbedding(model.Embedding);
 
             return this.Json(posts);
         }
