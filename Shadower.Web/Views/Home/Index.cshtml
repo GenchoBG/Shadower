@@ -2,7 +2,11 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<form id="faceForm" enctype="multipart/form-data" >
+    <input id="faceFile" name="face" type="file" multiple/>
+    <input id="submitBtn" type="submit"/>
+</form>
+
+@section Scripts{ 
+    <script src="/js/faces.js"></script>
+}

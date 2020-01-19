@@ -1,4 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shadower.Services;
 using Shadower.Web.Models;
@@ -17,6 +22,13 @@ namespace Shadower.Web.Controllers
         public IActionResult Index()
         {
             return this.View();
+        }
+
+        public IActionResult SearchFace(IList<double> embedding)
+        {
+            var posts = this.postService.FindPostsByEmbedding(embedding);
+
+            return this.Json(posts);
         }
 
         public IActionResult Privacy()

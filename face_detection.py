@@ -8,14 +8,14 @@ def open_image(filepath):
     image = Image.open(filepath)
     image = image.convert('RGB')
     pixels = asarray(image)
-    
+
     return pixels
 
 def extract_faces(pixels, required_size=(160, 160)):
 
     results = detector.detect_faces(pixels)
     faces = []
-    
+
     for result in results:
         x1, y1, width, height = result['box']
 
@@ -29,5 +29,5 @@ def extract_faces(pixels, required_size=(160, 160)):
             image = image.resize(required_size)
         face_array = asarray(image)
         faces.append(face_array)
-        
+
     return faces
