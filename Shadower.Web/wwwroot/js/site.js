@@ -3,32 +3,42 @@
 
 // Write your JavaScript code.
 
-//(function ($, window, document, undefined) {
-//    $('#faceFile').each(function () {
-//        var $input = $(this),
-//            $label = $("input").next('label'),
-//            labelVal = $("label").html();
-//
-//        $input.on('change', function (e) {
-//            var fileName = '';
-//
-//            if (this.files && this.files.length > 1)
-//                fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
-//            else if (e.target.value)
-//                fileName = e.target.value.split('\\').pop();
-//
-//            if (fileName)
-//                $label.find('span').html(fileName);
-//            else
-//                $label.html(labelVal);
-//        });
-//
-//        // Firefox bug fix
-//        $input
-//            .on('focus', function () { $input.addClass('has-focus'); })
-//            .on('blur', function () { $input.removeClass('has-focus'); });
-//    });
-//})(jQuery, window, document);
+function handleFileSelect() {
+    //Check File API support
+    if (window.File && window.FileList && window.FileReader) {
+
+        var files = event.target.files; //FileList object
+        
+        var file = files[0];
+        //Only pics
+        if (!file.type.match('image')) {
+            alert("error");
+        }
+
+        var picReader = new FileReader();
+        picReader.addEventListener("load", function (event) {
+            var picFile = event.target;
+            var div = $("#form-header-content");
+            var image = $("<img class='thumbnail' alt='pic' src='" + picFile.result + "'" + "title='" + file.name + "'/>")
+
+            image.ready(function(parameters) {
+                div.append(image);
+               
+                var box = $("#form-header");
+                image.width(box.width() - parseInt($("#form-header-content").css("padding-left")) * 2);
+
+                box.animate({ height: "+=" + image.height + "px" }, 1000);
+            });
+        });
+
+        
+
+        //Read the image
+        picReader.readAsDataURL(file);
+    } else {
+        console.log("Your browser does not support File API");
+    }
+}
 
 $(document).ready(function () {
     $("#faceFile").change(function () {
@@ -36,10 +46,11 @@ $(document).ready(function () {
         let label = $("#faceFileLabel");
         console.log(input);
         console.log(this.files);
-        if (this.files.length > 1) {
-            label.text(this.files.length + " files selected");
-        } else {
-            label.text(this.files[0].name);
-        }
+
+        label.text(this.files[0].name);
+
+        handleFileSelect();
     });
+
+    
 });
