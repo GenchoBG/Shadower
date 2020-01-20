@@ -54,3 +54,77 @@ body {
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
 }
+
+#form {
+    margin: 5% auto 0;
+    width: 50%;
+    height: 40%;
+    background-color: antiquewhite;
+    padding: 2% 0;
+}
+
+#faceFile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: whitesmoke;
+    background-color: lightsalmon;
+    display: inline-block;
+    padding: 5px 20px;
+    border: 0.1px solid darksalmon;
+    border-radius: 25px;
+}
+
+ion-icon {
+    width: 25px !important;
+    height: 25px !important;
+    margin: 1px 10px -5px 0;
+}
+
+#faceFile:focus + label,
+#faceFile + label:hover {
+    background-color: darksalmon;
+}
+
+#faceFile + label {
+    cursor: pointer; /* "hand" cursor */
+}
+
+.polaroid {
+    width: 80%;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 25px;
+}
+
+.polaroid-container {
+    text-align: center;
+    padding: 10px 20px;
+}
+
+.sample-heading {
+    padding: 1em;
+    border: 0.25em solid;
+    position: relative;
+}
+.sample-heading::before, .sample-heading::after {
+    content: '';
+    display: block;
+    position: absolute;
+    background: #fff;
+}
+.sample-heading::before {
+    top: -0.3em;
+    bottom: -0.3em;
+    left: 1em;
+    right: 1em;
+}
+.sample-heading::after {
+    left: -0.3em;
+    right: -0.3em;
+    top: 1em;
+    bottom: 1em;
+}
+.sample-heading .heading {
+    position: relative;
+    z-index: 1;
+}

@@ -2,7 +2,7 @@
     $("#faceForm").submit(function (e) {
         e.preventDefault();
 
-        const facesApiUrl = "http://127.0.0.1:5000/getembeddings";
+        const facesApiUrl = "http://94.156.180.190/getembeddings";
         for (var key of new FormData(this).keys()) {
             console.log(key);
         }

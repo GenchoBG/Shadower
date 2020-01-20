@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Shadower.Services;
 using Shadower.Web.Models;
 
@@ -32,6 +33,11 @@ namespace Shadower.Web.Controllers
         }
 
         public IActionResult Privacy()
+        {
+            return this.View();
+        }
+
+        public IActionResult InstructionManual()
         {
             return this.View();
         }
