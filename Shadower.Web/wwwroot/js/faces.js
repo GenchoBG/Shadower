@@ -44,12 +44,13 @@
                         },
                         success: function (posts) {
                             banner.hide();
+                            $("#successResult").show();
                             var postsTable = $("#posts");
                             var i = 1;
                             for (let post of posts) {
                                 postsTable.append($(`<tr>
                                                         <th scope="row">${i}</th>
-                                                        <td>${post.link}</td>
+                                                        <td><a href="${post.link}">${post.link}</a></td>
                                                     </tr>`));
                                 console.log(post.link);
                                 i++;

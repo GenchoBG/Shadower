@@ -206,3 +206,7 @@ ion-icon {
         transform: rotate(360deg);
     }
 }
+
+#successResult > h4 {
+    margin-bottom: 3%;
+}
