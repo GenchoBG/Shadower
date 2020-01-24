@@ -114,7 +114,6 @@ function handleFileSelect() {
                 div.append(image);
 
                 var box = $("#form-header");
-                image.width(box.width() - parseInt($("#form-header-content").css("padding-left")) * 2);
 
                 box.animate({ height: "+=" + image.height + "px" }, 1000);
             });
