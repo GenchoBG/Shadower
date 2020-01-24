@@ -354,3 +354,6 @@ MigrationBackup/
 
 # pycache
 __pychache__/
+
+# temp image
+temp.jpg

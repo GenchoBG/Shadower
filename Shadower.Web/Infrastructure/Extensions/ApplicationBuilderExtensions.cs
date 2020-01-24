@@ -23,7 +23,7 @@ namespace Shadower.Web.Infrastructure.Extensions
                 {
                     if (!await db.Posts.AnyAsync())
                     {
-                        var bobiLink = @"https://i.imgur.com/xuc1CCU.jpg";
+                        var bobiLink = @"https://i.imgur.com/xuc1CCU";
                         var bobiEmbedding = new List<double>
                         {
                             1.4051275  , 0.8755349  , 1.542957   ,-0.23951182 ,-0.79993623 , 0.12106702  ,
@@ -51,7 +51,7 @@ namespace Shadower.Web.Infrastructure.Extensions
                         };
                         postService.AddPost(bobiLink, new[] { bobiEmbedding });
 
-                        var marianlink1 = @"https://i.imgur.com/RF2ms7n.jpg";
+                        var marianlink1 = @"https://i.imgur.com/RF2ms7n";
 
                         var marianembedding1 = new List<double>
                         {                                                                               
@@ -80,7 +80,7 @@ namespace Shadower.Web.Infrastructure.Extensions
                         };
                         postService.AddPost(marianlink1, new[] { marianembedding1 });
 
-                        var marianlink2 = @"https://i.imgur.com/moXqdtk.jpg";
+                        var marianlink2 = @"https://i.imgur.com/moXqdtk";
 
                         var marianembedding2 = new List<double>
                         {

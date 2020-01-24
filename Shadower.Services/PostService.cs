@@ -87,9 +87,9 @@ namespace Shadower.Services
             {
                 return (null, double.MaxValue);
             }
-            
+
             var mostSimilar = this.db.Embeddings.Include(e => e.Values).ToList().OrderBy(e =>
-                this.EucledianDistance(embedding, e))
+                    this.EucledianDistance(embedding, e))
                 .First();
 
             return (mostSimilar, this.EucledianDistance(embedding, mostSimilar));
