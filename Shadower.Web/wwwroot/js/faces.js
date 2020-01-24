@@ -6,15 +6,19 @@
 
         handleFileSelect();
     });
-    var banner = $("#banner");
-    $(".modal-body").children().hide();
-    banner.show();
 
     $("#faceForm").submit(function (e) {
         e.preventDefault();
+
+        var banner = $("#banner");
+
+        $("#posts").empty();
+        $(".modal-body").children().hide();
+        banner.show();
+
         $("#toggleResult").trigger("click");
 
-		const facesApiUrl = "http://94.156.180.190:80/getembeddings";
+        const facesApiUrl = "http://94.156.180.190:80/getembeddings";
         var formData = new FormData();
         formData.append('face', $('#faceFile')[0].files[0]);
 
@@ -44,17 +48,22 @@
                         },
                         success: function (posts) {
                             banner.hide();
-                            $("#successResult").show();
-                            var postsTable = $("#posts");
-                            var i = 1;
-                            for (let post of posts) {
-                                postsTable.append($(`<tr>
+                            if (posts.length === 0) {
+                                $("#nothingFoundDb").show();
+                            } else {
+                                $("#successResult").show();
+                                var postsTable = $("#posts");
+                                var i = 1;
+                                for (let post of posts) {
+                                    postsTable.append($(`<tr>
                                                         <th scope="row">${i}</th>
                                                         <td><a href="${post.link}">${post.link}</a></td>
                                                     </tr>`));
-                                console.log(post.link);
-                                i++;
+                                    console.log(post.link);
+                                    i++;
+                                }
                             }
+
                         },
                         error: function (req, status, err) {
                             console.log("something went wrong");

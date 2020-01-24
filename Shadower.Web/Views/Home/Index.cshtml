@@ -2,6 +2,8 @@
     ViewData["Title"] = "Home Page";
 }
 
+<link rel="stylesheet" href="css/faces.css"/>
+
 <h1 class="display-1 align-content-center">Who are you looking for?</h1>
 
 <form id="faceForm" enctype="multipart/form-data">
@@ -44,8 +46,11 @@
                 <div id="nothingFound">
                     <h3 class="display-3">Sorry, no face found!</h3>
                 </div>
-                <div id="moreThanOne" hidden>
-                    <h3 class="display-3">You'd better read the instruction manual! More than one face found!</h3>
+                <div id="nothingFoundDb">
+                    <h3 class="display-3">Sorry, no such face present in the database!</h3>
+                </div>
+                <div id="moreThanOne">
+                    <h3 class="display-3">You'd better read the instruction manual! <br/>More than one face found!</h3>
                 </div>
                 <div id="successResult">
                     <h4 class="display-4">Here is what we found:</h4>
