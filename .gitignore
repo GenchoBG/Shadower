@@ -357,3 +357,6 @@ __pychache__/
 
 # temp image
 temp.jpg
+
+# back-ups
+crawlerbackup.py
