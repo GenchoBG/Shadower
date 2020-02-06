@@ -26,6 +26,48 @@ namespace Shadower.Web.Controllers
         }
 
         [HttpPost]
+        public IActionResult AddPost(PostAddModel model)
+        {
+            if (model.Embeddings.Count == 0)
+            {
+                return this.BadRequest();
+            }
+
+            var embeddingsArray = model.Embeddings.Select(e => e.ToArray()).ToArray();
+
+            if (embeddingsArray[0].Length != 128)
+            {
+                var embeddings = new List<List<double>>(embeddingsArray[0].Length);
+
+                var flattened = model.Embeddings.SelectMany(l => l).ToArray();
+
+                var current = new List<double>();
+                for (int i = 0; i <= flattened.Length; i++)
+                {
+                    if (i != 0 && i % 128 == 0)
+                    {
+                        embeddings.Add(current);
+                        current = new List<double>();
+                        if (i == flattened.Length)
+                        {
+                            break;
+                        }
+                    }
+
+                    current.Add(flattened[i]);
+                }
+
+                this.postService.AddPost(model.Link, embeddings);
+            }
+            else
+            {
+                this.postService.AddPost(model.Link, model.Embeddings);
+            }
+
+            return this.Ok();
+        }
+
+        [HttpPost]
         public IActionResult SearchFace(FaceSearchModel model)
         {
             var posts = this.postService.FindPostsByEmbedding(model.Embedding);

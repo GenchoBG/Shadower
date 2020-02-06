@@ -354,3 +354,9 @@ MigrationBackup/
 
 # pycache
 __pychache__/
+
+# temp image
+temp.jpg
+
+# back-ups
+crawlerbackup.py
