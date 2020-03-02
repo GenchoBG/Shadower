@@ -1,6 +1,8 @@
 ﻿#faceForm {
     margin: 5% auto 0;
     height: 90%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 #form-header {

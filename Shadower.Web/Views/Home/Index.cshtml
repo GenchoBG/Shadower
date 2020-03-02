@@ -11,7 +11,7 @@
         <div id="form-header-content">
             <div class="row justify-content-center">
                 <input id="faceFile" name="face" type="file" hidden />
-                <label for="faceFile"><ion-icon name="cloud-upload"></ion-icon><span id="faceFileLabel">Choose a file...</span></label>
+                <label for="faceFile" id="drop_zone" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)"><ion-icon name="cloud-upload"></ion-icon><span id="faceFileLabel">Choose a file...</span></label>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
 
 <button id="toggleResult" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" hidden="true">Large modal</button>
 
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div id="faceModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -59,15 +59,17 @@
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Posts</th>
-                                </tr>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Posts</th>
+                            </tr>
                             </thead>
                             <tbody id="posts"></tbody>
                         </table>
                     </div>
-                    
+                </div>
+                <div id="error">
+                    <h2 class="display-2 font-weight-bold">INVALID FILE FORMAT</h2>
                 </div>
             </div>
             <div class="modal-footer">
