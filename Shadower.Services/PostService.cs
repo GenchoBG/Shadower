@@ -6,7 +6,7 @@ using Shadower.Data;
 using Shadower.Data.Models;
 
 namespace Shadower.Services
-{
+{ 
     public class PostService : IPostService
     {
         private readonly ShadowerDbContext db;

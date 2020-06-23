@@ -19,7 +19,7 @@ def addpost(link, image):
     if len(embeddings) == 0 or link == None:
         return
     print(np.array(embeddings).shape)
-    API_ENDPOINT = "http://localhost:64205/Home/AddPost"
+    API_ENDPOINT = "http://shadower.azurewebsites.net/Home/AddPost"
     data = {
         'link':link,
         'embeddings':embeddings
@@ -42,7 +42,7 @@ def get_albums(target):
 
     return albums
 
-target_album = 'https://www.facebook.com/pg/clubbiad/photos/?tab=album&album_id=10157825957381276'
+target_album = 'https://www.facebook.com/pg/SoftwareUniversity/photos/?tab=album&album_id=2816399398398176'
 albums = [target_album]
 
 def get_images(album):
