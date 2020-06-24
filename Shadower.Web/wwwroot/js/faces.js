@@ -131,6 +131,17 @@ $(document).ready(() => {
     });
 });
 
+function checkChanged(e) {
+    const button = $("#submitBtn");
+    if (e.checked) {
+        button.attr('value', "Track them!");
+        button.addClass('btn-danger');
+    } else {
+        button.removeClass('btn-danger');
+        button.attr('value', "Find them!");
+    }
+}
+
 function isValid() {
     //Only pics
     if (!file.type.match('image')) {
