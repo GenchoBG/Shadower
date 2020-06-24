@@ -53,41 +53,70 @@ $(document).ready(() => {
                     banner.hide();
                     $("#moreThanOne").show();
                 } else {
-                    $.ajax({
-                        method: "post",
-                        url: '/Home/SearchFace',
-                        data: {
-                            embedding: embeddings[0],
-                            shouldNotify: shouldNotify
-                        },
-                        success: function (posts) {
-                            banner.hide();
-                            if (posts.length === 0) {
-                                $("#nothingFoundDb").show();
-                            } else {
-                                $("#successResult").show();
-                                var postsTable = $("#posts");
-                                var i = 1;
-                                for (let post of posts) {
-                                    postsTable.append($(`<tr>
+                    if (shouldNotify) {
+                        $.ajax({
+                            method: "post",
+                            url: '/Home/ShouldNotify',
+                            data: {
+                                embedding: embeddings[0]
+                            },
+                            success: function (data) {
+                                banner.hide();
+
+                                let message = 'You will be notified when the person is found!';
+                                if (!data.success) {
+                                    message = 'This person is already being tracked!';
+                                }
+
+                                $("#notify").show();
+                                $("#notify").append(`<h3 class="display-3">${message}</h3>`);
+
+                                setTimeout(() => {
+                                    $("#notify").innerHTML = '';
+                                    $("#faceModal").modal('hide');
+                                }, 2000);
+                            },
+                            error: function (req, status, err) {
+                                console.log("something went wrong");
+                                console.log(status);
+                                console.log(err);
+                                console.log(req);
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            method: "post",
+                            url: '/Home/SearchFace',
+                            data: {
+                                embedding: embeddings[0]
+                            },
+                            success: function (posts) {
+                                banner.hide();
+                                if (posts.length === 0) {
+                                    $("#nothingFoundDb").show();
+                                } else {
+                                    $("#successResult").show();
+                                    var postsTable = $("#posts");
+                                    var i = 1;
+                                    for (let post of posts) {
+                                        postsTable.append($(`<tr>
                                                         <th scope="row">${i}</th>
                                                         <td><a href="${post.link}">${post.link}</a></td>
                                                     </tr>`));
-                                    console.log(post.link);
-                                    i++;
+                                        console.log(post.link);
+                                        i++;
+                                    }
                                 }
+
+                            },
+                            error: function (req, status, err) {
+                                console.log("something went wrong");
+                                console.log(status);
+                                console.log(err);
+                                console.log(req);
                             }
-
-                        },
-                        error: function (req, status, err) {
-                            console.log("something went wrong");
-                            console.log(status);
-                            console.log(err);
-                            console.log(req);
-                        }
-                    });
-
-                    console.log('All is good! One face found');
+                        });
+                    }
                 }
 
                 console.log(embeddings);
@@ -179,7 +208,7 @@ function handleFileSelect() {
 function dropHandler(ev) {
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
-    
+
     if (ev.dataTransfer.items) {
         // Use DataTransferItemList interface to access the file(s)
         for (let i = 0; i < ev.dataTransfer.items.length; i++) {

@@ -75,6 +75,14 @@ namespace Shadower.Web.Controllers
             return this.Json(posts);
         }
 
+        [HttpPost]
+        public IActionResult ShouldNotify(FaceSearchModel model)
+        {
+            var isSuccessful = this.postService.AddTrackedFace(model.Embedding);
+
+            return this.Json(new {success = isSuccessful});
+        }
+
         public IActionResult Privacy()
         {
             return this.View();

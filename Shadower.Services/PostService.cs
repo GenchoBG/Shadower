@@ -90,6 +90,7 @@ namespace Shadower.Services
                 }
 
                 mostSimilar.Face.Tracked = true;
+                newEmbedding.Face = mostSimilar.Face;
             }
             else
             {
