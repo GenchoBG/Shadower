@@ -13,6 +13,8 @@ $(document).ready(() => {
     $("#faceForm").submit(function (e) {
         e.preventDefault();
 
+        const shouldNotify = $("#shouldNotify").is(":checked");
+
         var banner = $("#banner");
 
         $("#posts").empty();
@@ -24,7 +26,6 @@ $(document).ready(() => {
         const facesApiUrl = "http://94.156.180.190:80/getembeddings";
         var formData = new FormData();
         formData.append('face', file);
-        console.log("FACE: ", file);
 
         if (!valid) {
             return;
@@ -56,7 +57,8 @@ $(document).ready(() => {
                         method: "post",
                         url: '/Home/SearchFace',
                         data: {
-                            embedding: embeddings[0]
+                            embedding: embeddings[0],
+                            shouldNotify: shouldNotify
                         },
                         success: function (posts) {
                             banner.hide();
