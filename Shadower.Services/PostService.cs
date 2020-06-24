@@ -67,6 +67,44 @@ namespace Shadower.Services
             this.db.SaveChanges();
         }
 
+        public bool AddTrackedFace(IList<double> embedding)
+        {
+            var newEmbedding = new Embedding();
+
+            for (int i = 0; i < embedding.Count; i++)
+            {
+                newEmbedding.Values.Add(new EmbeddingValue()
+                {
+                    Index = i,
+                    Value = embedding[i]
+                });
+            }
+
+            var (mostSimilar, distance) = this.FindMostSimilarEmbedding(embedding);
+
+            if (distance <= SimilarityThreshhold)
+            {
+                if (mostSimilar.Face.Tracked)
+                {
+                    return false;
+                }
+
+                mostSimilar.Face.Tracked = true;
+            }
+            else
+            {
+                newEmbedding.Face = new Face()
+                {
+                    Tracked = true
+                };
+            }
+
+            this.db.Embeddings.Add(newEmbedding);
+            this.db.SaveChanges();
+
+            return true;
+        }
+
         public IEnumerable<Post> FindPostsByEmbedding(IList<double> embedding)
         {
             var (mostSimilar, distance) = this.FindMostSimilarEmbedding(embedding);
@@ -88,7 +126,7 @@ namespace Shadower.Services
                 return (null, double.MaxValue);
             }
 
-            var mostSimilar = this.db.Embeddings.Include(e => e.Values).ToList().OrderBy(e =>
+            var mostSimilar = this.db.Embeddings.Include(e => e.Face).Include(e => e.Values).ToList().OrderBy(e =>
                     this.EucledianDistance(embedding, e))
                 .First();
 
