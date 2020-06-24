@@ -17,9 +17,10 @@ namespace Shadower.Services
             this.db = db;
         }
 
-        public void AddPost(string link, IEnumerable<IList<double>> embeddings)
+        public bool AddPost(string link, IEnumerable<IList<double>> embeddings)
         {
             var newEmbeddings = new List<Embedding>();
+            var hasTracked = false;
 
             foreach (var embedding in embeddings)
             {
@@ -39,6 +40,11 @@ namespace Shadower.Services
                 if (distance <= SimilarityThreshhold)
                 {
                     newEmbedding.FaceId = mostSimilar.FaceId;
+
+                    if (newEmbedding.Face.Tracked)
+                    {
+                        hasTracked = true;
+                    }
                 }
                 else
                 {
@@ -65,6 +71,8 @@ namespace Shadower.Services
 
             this.db.Posts.Add(post);
             this.db.SaveChanges();
+
+            return hasTracked;
         }
 
         public bool AddTrackedFace(IList<double> embedding)

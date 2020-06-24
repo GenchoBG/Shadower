@@ -35,6 +35,8 @@ namespace Shadower.Web.Controllers
 
             var embeddingsArray = model.Embeddings.Select(e => e.ToArray()).ToArray();
 
+            var hasWanted = false;
+
             if (embeddingsArray[0].Length != 128)
             {
                 var embeddings = new List<List<double>>(embeddingsArray[0].Length);
@@ -57,11 +59,16 @@ namespace Shadower.Web.Controllers
                     current.Add(flattened[i]);
                 }
 
-                this.postService.AddPost(model.Link, embeddings);
+                hasWanted = this.postService.AddPost(model.Link, embeddings);
             }
             else
             {
-                this.postService.AddPost(model.Link, model.Embeddings);
+                hasWanted = this.postService.AddPost(model.Link, model.Embeddings);
+            }
+
+            if (hasWanted)
+            {
+                // push notifications
             }
 
             return this.Ok();
