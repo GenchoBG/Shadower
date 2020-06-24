@@ -23,7 +23,7 @@ $(document).ready(() => {
 
         $("#toggleResult").trigger("click");
 
-        const facesApiUrl = "http://94.156.180.190:80/getembeddings";
+        const facesApiUrl = "http://83.228.90.116:80/getembeddings";
         var formData = new FormData();
         formData.append('face', file);
 

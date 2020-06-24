@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Shadower.Data.Models
 {
@@ -9,6 +7,8 @@ namespace Shadower.Data.Models
     {
         [Key]
         public int Id { get; set; }
+
+        public bool Tracked { get; set; }
 
         public ICollection<PostFace> Posts { get; set; }
 

@@ -7,6 +7,8 @@ namespace Shadower.Services
     {
         void AddPost(string link, IEnumerable<IList<double>> embeddings);
 
+        bool AddTrackedFace(IList<double> embedding);
+
         IEnumerable<Post> FindPostsByEmbedding(IList<double> embedding);
     }
 }
