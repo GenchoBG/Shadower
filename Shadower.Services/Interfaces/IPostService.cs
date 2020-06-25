@@ -2,11 +2,11 @@
 using System.Linq;
 using Shadower.Data.Models;
 
-namespace Shadower.Services
+namespace Shadower.Services.Interfaces
 {
     public interface IPostService
     {
-        bool AddPost(string link, IEnumerable<IList<double>> embeddings);
+        Post AddPost(string link, IEnumerable<IList<double>> embeddings);
 
         bool AddTrackedFace(IList<double> embedding);
 

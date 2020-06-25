@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Shadower.Data;
 using Shadower.Data.Models;
 using Shadower.Services;
+using Shadower.Services.Interfaces;
 
 namespace Shadower.Web.Infrastructure.Extensions
 {

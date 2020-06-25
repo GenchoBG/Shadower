@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.CodeAnalysis;
+using Shadower.Data.Models;
 using Shadower.Services;
+using Shadower.Services.Interfaces;
 using Shadower.Web.Hubs;
 using Shadower.Web.Models;
 
@@ -39,7 +39,7 @@ namespace Shadower.Web.Controllers
 
             var embeddingsArray = model.Embeddings.Select(e => e.ToArray()).ToArray();
 
-            var hasWanted = false;
+            Post post;
 
             if (embeddingsArray[0].Length != 128)
             {
@@ -63,16 +63,16 @@ namespace Shadower.Web.Controllers
                     current.Add(flattened[i]);
                 }
 
-                hasWanted = this.postService.AddPost(model.Link, embeddings);
+                post = this.postService.AddPost(model.Link, embeddings);
             }
             else
             {
-                hasWanted = this.postService.AddPost(model.Link, model.Embeddings);
+                post = this.postService.AddPost(model.Link, model.Embeddings);
             }
 
-            if (hasWanted)
+            if (post.Faces.Any(f => f.Face.Tracked))
             {
-                await this.hubContext.Clients.All.SendCoreAsync("UpdateFoundFaces", new object[] { DateTime.Now, model.Link });
+                await this.hubContext.Clients.All.SendCoreAsync("UpdateFoundFaces", new object[] { DateTime.Now, model.Link, post.Id });
             }
 
             return this.Ok();

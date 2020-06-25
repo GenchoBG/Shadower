@@ -4,8 +4,9 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Shadower.Data;
 using Shadower.Data.Models;
+using Shadower.Services.Interfaces;
 
-namespace Shadower.Services
+namespace Shadower.Services.Implementations
 { 
     public class PostService : IPostService
     {
@@ -17,10 +18,9 @@ namespace Shadower.Services
             this.db = db;
         }
 
-        public bool AddPost(string link, IEnumerable<IList<double>> embeddings)
+        public Post AddPost(string link, IEnumerable<IList<double>> embeddings)
         {
             var newEmbeddings = new List<Embedding>();
-            var hasTracked = false;
 
             foreach (var embedding in embeddings)
             {
@@ -40,11 +40,6 @@ namespace Shadower.Services
                 if (distance <= SimilarityThreshhold)
                 {
                     newEmbedding.FaceId = mostSimilar.FaceId;
-
-                    if (mostSimilar.Face.Tracked)
-                    {
-                        hasTracked = true;
-                    }
                 }
                 else
                 {
@@ -73,7 +68,7 @@ namespace Shadower.Services
             this.db.Posts.Add(post);
             this.db.SaveChanges();
 
-            return hasTracked;
+            return post;
         }
 
         public bool AddTrackedFace(IList<double> embedding)

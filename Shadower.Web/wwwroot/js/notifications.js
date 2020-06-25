@@ -7,7 +7,7 @@ $(document).ready(function() {
         return console.error(err.toString());
     });
 
-    connection.on("UpdateFoundFaces", function (date, link) {
-        addPost({ uploadedDateTime: date, link: link });
+    connection.on("UpdateFoundFaces", function (date, link, id) {
+        addPost({ uploadedDateTime: date, link: link, id:id });
     });
 });
