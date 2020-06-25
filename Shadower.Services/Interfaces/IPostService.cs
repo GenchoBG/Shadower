@@ -5,7 +5,7 @@ namespace Shadower.Services
 {
     public interface IPostService
     {
-        void AddPost(string link, IEnumerable<IList<double>> embeddings);
+        bool AddPost(string link, IEnumerable<IList<double>> embeddings);
 
         bool AddTrackedFace(IList<double> embedding);
 

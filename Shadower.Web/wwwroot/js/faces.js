@@ -13,6 +13,8 @@ $(document).ready(() => {
     $("#faceForm").submit(function (e) {
         e.preventDefault();
 
+        const shouldNotify = $("#shouldNotify").is(":checked");
+
         var banner = $("#banner");
 
         $("#posts").empty();
@@ -24,7 +26,6 @@ $(document).ready(() => {
         const facesApiUrl = "http://83.228.90.116:80/getembeddings";
         var formData = new FormData();
         formData.append('face', file);
-        console.log("FACE: ", file);
 
         if (!valid) {
             return;
@@ -52,40 +53,70 @@ $(document).ready(() => {
                     banner.hide();
                     $("#moreThanOne").show();
                 } else {
-                    $.ajax({
-                        method: "post",
-                        url: '/Home/SearchFace',
-                        data: {
-                            embedding: embeddings[0]
-                        },
-                        success: function (posts) {
-                            banner.hide();
-                            if (posts.length === 0) {
-                                $("#nothingFoundDb").show();
-                            } else {
-                                $("#successResult").show();
-                                var postsTable = $("#posts");
-                                var i = 1;
-                                for (let post of posts) {
-                                    postsTable.append($(`<tr>
+                    if (shouldNotify) {
+                        $.ajax({
+                            method: "post",
+                            url: '/Home/ShouldNotify',
+                            data: {
+                                embedding: embeddings[0]
+                            },
+                            success: function (data) {
+                                banner.hide();
+
+                                let message = 'You will be notified when the person is found!';
+                                if (!data.success) {
+                                    message = 'This person is already being tracked!';
+                                }
+
+                                $("#notify").show();
+                                $("#notify").append(`<h3 class="display-3">${message}</h3>`);
+
+                                setTimeout(() => {
+                                    $("#notify").innerHTML = '';
+                                    $("#faceModal").modal('hide');
+                                }, 2000);
+                            },
+                            error: function (req, status, err) {
+                                console.log("something went wrong");
+                                console.log(status);
+                                console.log(err);
+                                console.log(req);
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            method: "post",
+                            url: '/Home/SearchFace',
+                            data: {
+                                embedding: embeddings[0]
+                            },
+                            success: function (posts) {
+                                banner.hide();
+                                if (posts.length === 0) {
+                                    $("#nothingFoundDb").show();
+                                } else {
+                                    $("#successResult").show();
+                                    var postsTable = $("#posts");
+                                    var i = 1;
+                                    for (let post of posts) {
+                                        postsTable.append($(`<tr>
                                                         <th scope="row">${i}</th>
                                                         <td><a href="${post.link}">${post.link}</a></td>
                                                     </tr>`));
-                                    console.log(post.link);
-                                    i++;
+                                        console.log(post.link);
+                                        i++;
+                                    }
                                 }
+
+                            },
+                            error: function (req, status, err) {
+                                console.log("something went wrong");
+                                console.log(status);
+                                console.log(err);
+                                console.log(req);
                             }
-
-                        },
-                        error: function (req, status, err) {
-                            console.log("something went wrong");
-                            console.log(status);
-                            console.log(err);
-                            console.log(req);
-                        }
-                    });
-
-                    console.log('All is good! One face found');
+                        });
+                    }
                 }
 
                 console.log(embeddings);
@@ -99,6 +130,17 @@ $(document).ready(() => {
         });
     });
 });
+
+function checkChanged(e) {
+    const button = $("#submitBtn");
+    if (e.checked) {
+        button.attr('value', "Track them!");
+        button.addClass('btn-danger');
+    } else {
+        button.removeClass('btn-danger');
+        button.attr('value', "Find them!");
+    }
+}
 
 function isValid() {
     //Only pics
@@ -177,7 +219,7 @@ function handleFileSelect() {
 function dropHandler(ev) {
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
-    
+
     if (ev.dataTransfer.items) {
         // Use DataTransferItemList interface to access the file(s)
         for (let i = 0; i < ev.dataTransfer.items.length; i++) {

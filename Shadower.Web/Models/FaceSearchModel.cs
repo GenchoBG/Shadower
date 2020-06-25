@@ -5,5 +5,7 @@ namespace Shadower.Web.Models
     public class FaceSearchModel
     {
         public IList<double> Embedding { get; set; }
+
+        public bool ShouldNotify { get; set; }
     }
 }

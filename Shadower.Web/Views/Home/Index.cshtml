@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<link rel="stylesheet" href="css/faces.css"/>
+<link rel="stylesheet" href="css/faces.css" />
 
 <h1 class="display-2 text-center" id="heading">Who are you looking for?</h1>
 
@@ -15,8 +15,12 @@
             </div>
         </div>
     </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="shouldNotify" onchange="checkChanged(this)" />
+        <label class="form-check-label" for="shouldNotify">Notify me when found</label>
+    </div>
     <div class="polaroid-container">
-        <input class="btn btn-outline-success btn-lg" id="submitBtn" type="submit" value="Find them!" />
+        <input class="btn btn-success btn-lg" id="submitBtn" type="submit" value="Find them!" />
     </div>
 </form>
 
@@ -52,17 +56,19 @@
                     <h3 class="display-3">Sorry, no such face present in the database!</h3>
                 </div>
                 <div id="moreThanOne">
-                    <h3 class="display-3">You'd better read the instruction manual! <br/>More than one face found!</h3>
+                    <h3 class="display-3">You'd better read the instruction manual! <br />More than one face found!</h3>
+                </div>
+                <div id="notify">
                 </div>
                 <div id="successResult">
                     <h4 class="display-4">Here is what we found:</h4>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Posts</th>
-                            </tr>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Posts</th>
+                                </tr>
                             </thead>
                             <tbody id="posts"></tbody>
                         </table>
