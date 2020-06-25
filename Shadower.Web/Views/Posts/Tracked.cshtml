@@ -1,17 +1,18 @@
 ﻿
 <table class="table table-bordered table-dark">
     <thead>
-    <tr>
-        <th>Uploaded Date & time</th>
-        <th>Link</th>
-    </tr>
+        <tr>
+            <th>Uploaded Date & time</th>
+            <th>Link</th>
+        </tr>
     </thead>
-    <tbody id="importantPosts">
-    
-    </tbody>
+    <tbody id="importantPosts"></tbody>
 </table>
 
 
-@section Scripts{ 
+@section Scripts{
+    <script src="~/js/signalr/dist/browser/signalr.js" type="text/javascript"></script>
+    <script src="~/js/signalr/dist/browser/signalr.min.js" type="text/javascript"></script>
     <script src="~/js/posts.js"></script>
+    <script src="~/js/notifications.js"></script>
 }

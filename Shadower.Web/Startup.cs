@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shadower.Data;
 using Shadower.Services;
+using Shadower.Web.Hubs;
 using Shadower.Web.Infrastructure.Extensions;
 
 namespace Shadower.Web
@@ -39,6 +40,7 @@ namespace Shadower.Web
             services.AddTransient<IPostService, PostService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +59,11 @@ namespace Shadower.Web
 
 
             app.Seed();
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<NotificationsHub>("/Notifications");
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

@@ -17,7 +17,7 @@ namespace Shadower.Web.Controllers
         [HttpGet]
         public IActionResult Tracked()
         {
-            return View();
+            return this.View();
         }
 
         // TODO: Filter archived
