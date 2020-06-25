@@ -6,6 +6,9 @@
             .append($("<td>").append(`<a href="${post.link}" style="color:white; text-decoration: none !important;" target="_blank">${post.link}</a>`))
             .append($("<td>").append($("<a>").attr("onclick", "archive(" + post.id + ")").text("Archive").addClass("btn btn-outline-danger"))));
 
+    if (post.archived) {
+        $("#post-" + post.id).children().last().remove();
+    }
     $("#empty").hide();
 }
 
@@ -13,8 +16,13 @@ function archive(id) {
     $.ajax({
         method: "post",
         url: '/Posts/Archive/' + id,
-        success: function() {
-            $("#post-" + id).remove();
+        success: function () {
+            let showArchived = $("#archived").text() === "true";
+            if (!showArchived) {
+                $("#post-" + id).remove();
+            } else {
+                $("#post-" + id).children().last().remove();
+            }
         },
         error: function (req, status, err) {
             console.log("something went wrong");
