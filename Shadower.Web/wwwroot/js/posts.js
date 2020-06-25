@@ -2,11 +2,9 @@
     $("#importantPosts")
         .append($("<tr>")
             .attr("id", "post-" + post.id)
-            .append($("<td>").text(post.uploadedDateTime))
-            .append($("<td>").text(post.link))
+            .append($("<td>").text(new Date(post.uploadedDateTime).toLocaleString()))
+            .append($("<td>").append(`<a href="${post.link}" style="color:white; text-decoration: none !important;" target="_blank">${post.link}</a>`))
             .append($("<td>").append($("<a>").attr("onclick", "archive(" + post.id + ")").text("Archive").addClass("btn btn-outline-danger"))));
-
-
 
     $("#empty").hide();
 }
@@ -28,7 +26,6 @@ function archive(id) {
 }
 
 function populateTable() {
-    // show loading thingy
     let showArchived = $("#archived").text() == "true";
 
     let url = '/Posts/GetImportant';
@@ -40,12 +37,11 @@ function populateTable() {
         method: "get",
         url: url,
         success: function (data) {
-            // hide loading thingy
 
             for (let post of data) {
                 addPost(post);
             }
-            if (data.length == 0) {
+            if (data.length === 0) {
                 $("#empty").show();
             }
         },
