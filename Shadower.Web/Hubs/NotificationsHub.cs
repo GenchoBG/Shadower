@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 
@@ -10,6 +8,7 @@ namespace Shadower.Web.Hubs
     {
         public async Task NotifyFaceFound(DateTime date, string link)
         {
+            await this.Clients.All.SendAsync("DisplayNotification");
             await this.Clients.All.SendAsync("UpdateFoundFaces", date, link);
         }
     }

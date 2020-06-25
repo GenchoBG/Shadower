@@ -72,6 +72,7 @@ namespace Shadower.Web.Controllers
 
             if (post.Faces.Any(f => f.Face.Tracked))
             {
+                await this.hubContext.Clients.All.SendCoreAsync("DisplayNotification", new object[] { });
                 await this.hubContext.Clients.All.SendCoreAsync("UpdateFoundFaces", new object[] { DateTime.Now, model.Link, post.Id });
             }
 

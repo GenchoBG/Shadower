@@ -15,7 +15,7 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
-              integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE="/>
+              integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -47,6 +47,7 @@
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main class="pb-3">
+            <div id="notification" style="display: none" class="alert alert-success">Something important found! Click <a class="alert-link" asp-controller="Posts" asp-action="Tracked">here</a>!</div>
             @RenderBody()
         </main>
     </div>
@@ -76,6 +77,9 @@
         </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js" type="text/javascript"></script>
+    <script src="~/js/signalr/dist/browser/signalr.min.js" type="text/javascript"></script>
+    <script src="~/js/notifications.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
 </body>
