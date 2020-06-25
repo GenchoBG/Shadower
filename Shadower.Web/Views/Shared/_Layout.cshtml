@@ -47,7 +47,12 @@
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main class="pb-3">
-            <div id="notification" style="display: none" class="alert alert-success">Something important found! Click <a class="alert-link" asp-controller="Posts" asp-action="Tracked">here</a>!</div>
+            <div id="notification" style="display: none" class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Something important found!</strong> Click <a class="alert-link" asp-controller="Posts" asp-action="Tracked">here</a> to check it out!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             @RenderBody()
         </main>
     </div>
