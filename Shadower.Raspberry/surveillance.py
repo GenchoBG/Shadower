@@ -26,14 +26,18 @@ while True:
 #for i in range(5):
     imagePath = f'./image.jpg'
     
-    #camera.capture(imagePath)
+    camera.capture(imagePath)
     
     data = {}
     files = {
         'face' : open(imagePath, 'rb')    
     }
     
-    result = requests.post(pythonServerUrl, data=data, files=files)
+    try:
+        result = requests.post(pythonServerUrl, data=data, files=files)
+    except:
+        print("error posting to python api")
+        continue
     
     embeddings = result.json()
     
@@ -48,7 +52,7 @@ while True:
             'embeddings' : embeddings,
             'link' : link
         }        
-        response = requests.post(aspNetServerUrl, data, files)
+        #response = requests.post(aspNetServerUrl, data, files)
         
         break
     
