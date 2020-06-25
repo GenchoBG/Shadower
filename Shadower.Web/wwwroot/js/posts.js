@@ -29,10 +29,16 @@ function archive(id) {
 
 function populateTable() {
     // show loading thingy
+    let showArchived = $("#archived").text() == "true";
+
+    let url = '/Posts/GetImportant';
+    if (showArchived) {
+        url += '?archived=true';
+    }
 
     $.ajax({
         method: "get",
-        url: '/Posts/GetImportant',
+        url: url,
         success: function (data) {
             // hide loading thingy
 

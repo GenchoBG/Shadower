@@ -137,7 +137,7 @@ namespace Shadower.Services.Implementations
         public IQueryable<Post> GetImportant()
         {
             return this.db.Faces.Include(f => f.Posts).ThenInclude(fp => fp.Post).Where(f => f.Tracked && f.Posts.Count > 0)
-                .SelectMany(f => f.Posts).Select(fp => fp.Post).Where(p => !p.Archived).AsQueryable();
+                .SelectMany(f => f.Posts).Select(fp => fp.Post).AsQueryable();
         }
 
         private (Embedding, double) FindMostSimilarEmbedding(IList<double> embedding)

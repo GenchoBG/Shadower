@@ -16,16 +16,25 @@ namespace Shadower.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Tracked()
+        public IActionResult Tracked(string archived = "false")
         {
+            this.ViewData["archived"] = archived;
+
             return this.View();
         }
 
         // TODO: Filter archived
         [HttpGet]
-        public IActionResult GetImportant()
+        public IActionResult GetImportant(string archived)
         {
-            var important = this.postService.GetImportant().Select(p => new PostListViewModel
+            var postsQuery = this.postService.GetImportant();
+
+            if (string.IsNullOrWhiteSpace(archived))
+            {
+                postsQuery = postsQuery.Where(p => !p.Archived);
+            }
+
+            var important = postsQuery.Select(p => new PostListViewModel
             {
                 Id = p.Id,
                 Link = p.Link,

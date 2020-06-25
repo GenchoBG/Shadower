@@ -1,11 +1,21 @@
-﻿
+﻿@if (string.Equals(ViewData["archived"], "true"))
+{
+    <a href="/Posts/Tracked?archived=false">Hide Archived</a>
+}
+else
+{
+    <a href="/Posts/Tracked?archived=true">Show Archived</a>
+}
+
+<div id="archived" style="display: none">@ViewData["archived"]</div>
+
 <table class="table table-bordered table-dark">
     <thead>
-    <tr>
-        <th>Uploaded Date & time</th>
-        <th>Link</th>
-        <th>Action</th>
-    </tr>
+        <tr>
+            <th>Uploaded Date & time</th>
+            <th>Link</th>
+            <th>Action</th>
+        </tr>
     </thead>
     <tbody id="importantPosts"></tbody>
 </table>
