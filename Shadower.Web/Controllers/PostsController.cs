@@ -38,7 +38,8 @@ namespace Shadower.Web.Controllers
             {
                 Id = p.Id,
                 Link = p.Link,
-                UploadedDateTime = p.UploadDateTime
+                UploadedDateTime = p.UploadDateTime,
+                Archived = p.Archived
             }).ToList();
 
             return this.Json(important);
