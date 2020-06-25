@@ -9,5 +9,7 @@ namespace Shadower.Web.Models
         public string Link { get; set; }
 
         public DateTime UploadedDateTime { get; set; }
+
+        public bool Archived { get; set; }
     }
 }
