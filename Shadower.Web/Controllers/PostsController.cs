@@ -8,11 +8,11 @@ namespace Shadower.Web.Controllers
 {
     public class PostsController : Controller
     {
-        private readonly IPostService facesService;
+        private readonly IPostService postService;
 
-        public PostsController(IPostService facesService)
+        public PostsController(IPostService postService)
         {
-            this.facesService = facesService;
+            this.postService = postService;
         }
 
         [HttpGet]
@@ -25,7 +25,7 @@ namespace Shadower.Web.Controllers
         [HttpGet]
         public IActionResult GetImportant()
         {
-            var important = this.facesService.GetImportant().Select(p => new PostListViewModel
+            var important = this.postService.GetImportant().Select(p => new PostListViewModel
             {
                 Id = p.Id,
                 Link = p.Link,
@@ -33,6 +33,14 @@ namespace Shadower.Web.Controllers
             }).ToList();
 
             return this.Json(important);
+        }
+
+        [HttpPost]
+        public IActionResult Archive(int id)
+        {
+            this.postService.ArchivePost(id);
+
+            return this.Ok();
         }
     }
 }

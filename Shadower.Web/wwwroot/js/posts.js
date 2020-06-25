@@ -1,13 +1,30 @@
 ﻿function addPost(post) {
     $("#importantPosts")
         .append($("<tr>")
+            .attr("id", "post-" + post.id)
             .append($("<td>").text(post.uploadedDateTime))
             .append($("<td>").text(post.link))
-            .append($("<td>").append($("<a>").attr("href", "/Posts/Archive/" + post.id).text("Archive").addClass("btn btn-outline-danger"))));
+            .append($("<td>").append($("<a>").attr("onclick", "archive(" + post.id + ")").text("Archive").addClass("btn btn-outline-danger"))));
 
 
 
     $("#empty").hide();
+}
+
+function archive(id) {
+    $.ajax({
+        method: "post",
+        url: '/Posts/Archive/' + id,
+        success: function() {
+            $("#post-" + id).remove();
+        },
+        error: function (req, status, err) {
+            console.log("something went wrong");
+            console.log(status);
+            console.log(err);
+            console.log(req);
+        }
+    });
 }
 
 function populateTable() {

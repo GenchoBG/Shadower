@@ -10,6 +10,8 @@ namespace Shadower.Services.Interfaces
 
         bool AddTrackedFace(IList<double> embedding);
 
+        void ArchivePost(int id);
+
         IEnumerable<Post> FindPostsByEmbedding(IList<double> embedding);
 
         IQueryable<Post> GetImportant();

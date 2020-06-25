@@ -9,6 +9,8 @@ namespace Shadower.Data.Models
         [Key]
         public int Id { get; set; }
 
+        public bool Archived { get; set; }
+
         public DateTime UploadDateTime { get; set; }
 
         [Required]
