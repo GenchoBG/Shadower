@@ -41,7 +41,7 @@ namespace Shadower.Services
                 {
                     newEmbedding.FaceId = mostSimilar.FaceId;
 
-                    if (newEmbedding.Face.Tracked)
+                    if (mostSimilar.Face.Tracked)
                     {
                         hasTracked = true;
                     }

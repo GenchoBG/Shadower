@@ -5,8 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.CodeAnalysis;
 using Shadower.Services;
+using Shadower.Web.Hubs;
 using Shadower.Web.Models;
 
 namespace Shadower.Web.Controllers
@@ -14,10 +16,12 @@ namespace Shadower.Web.Controllers
     public class HomeController : Controller
     {
         private readonly IPostService postService;
+        private readonly IHubContext<NotificationsHub> hubContext;
 
-        public HomeController(IPostService postService)
+        public HomeController(IPostService postService, IHubContext<NotificationsHub> hubContext)
         {
             this.postService = postService;
+            this.hubContext = hubContext;
         }
 
         public IActionResult Index()
@@ -26,7 +30,7 @@ namespace Shadower.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddPost(PostAddModel model)
+        public async Task<IActionResult> AddPost(PostAddModel model)
         {
             if (model.Embeddings.Count == 0)
             {
@@ -68,7 +72,7 @@ namespace Shadower.Web.Controllers
 
             if (hasWanted)
             {
-                // push notifications
+                await this.hubContext.Clients.All.SendCoreAsync("UpdateFoundFaces", new object[] { DateTime.Now, model.Link });
             }
 
             return this.Ok();
@@ -87,7 +91,7 @@ namespace Shadower.Web.Controllers
         {
             var isSuccessful = this.postService.AddTrackedFace(model.Embedding);
 
-            return this.Json(new {success = isSuccessful});
+            return this.Json(new { success = isSuccessful });
         }
 
         public IActionResult Privacy()
