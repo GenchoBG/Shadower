@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shadower.Data;
 
 namespace Shadower.Data.Migrations
 {
     [DbContext(typeof(ShadowerDbContext))]
-    partial class ShadowerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200624211940_AddPostUploadDateTime")]
+    partial class AddPostUploadDateTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

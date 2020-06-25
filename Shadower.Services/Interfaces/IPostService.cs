@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Shadower.Data.Models;
 
 namespace Shadower.Services
@@ -10,5 +11,7 @@ namespace Shadower.Services
         bool AddTrackedFace(IList<double> embedding);
 
         IEnumerable<Post> FindPostsByEmbedding(IList<double> embedding);
+
+        IQueryable<Post> GetImportant();
     }
 }

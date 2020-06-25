@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Shadower.Data.Models
 {
@@ -9,6 +8,8 @@ namespace Shadower.Data.Models
     {
         [Key]
         public int Id { get; set; }
+
+        public DateTime UploadDateTime { get; set; }
 
         [Required]
         public string Link { get; set; }

@@ -60,6 +60,7 @@ namespace Shadower.Services
             var post = new Post()
             {
                 Link = link,
+                UploadDateTime = DateTime.Now,
                 Faces = newEmbeddings
                 .Select(e => e.FaceId)
                 .Distinct()
@@ -126,6 +127,12 @@ namespace Shadower.Services
             }
 
             return new List<Post>();
+        }
+
+        public IQueryable<Post> GetImportant()
+        {
+            return this.db.Faces.Include(f => f.Posts).ThenInclude(fp => fp.Post).Where(f => f.Tracked && f.Posts.Count > 0)
+                .SelectMany(f => f.Posts).Select(fp => fp.Post).AsQueryable();
         }
 
         private (Embedding, double) FindMostSimilarEmbedding(IList<double> embedding)
