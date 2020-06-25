@@ -12,13 +12,30 @@ $(document).ready(() => {
 
     $("#faceForm").submit(function (e) {
         e.preventDefault();
+        $(".modal-body").children().hide();
+
+        if (file === null) {
+            console.log('what')
+            $("#posts").empty();
+            $("#toggleResult").trigger("click");
+            let message = 'No data provided!';
+            $("#exampleModalCenterTitle").text("Warning");
+
+            $("#notify").show();
+            $("#notify>h3").text(message);
+
+            setTimeout(() => {
+                $("#notify>h3").text('');
+                $("#faceModal").modal('hide');
+            }, 2000);
+            return;
+        }
 
         const shouldNotify = $("#shouldNotify").is(":checked");
 
         var banner = $("#banner");
 
         $("#posts").empty();
-        $(".modal-body").children().hide();
         banner.show();
 
         $("#toggleResult").trigger("click");
@@ -40,6 +57,7 @@ $(document).ready(() => {
             crossDomain: true,
             cache: false,
             success: function (embeddings) {
+                clearInputs();
                 if (embeddings.length === 0) {
                     $("#exampleModalCenterTitle").text("ERROR");
 
@@ -63,16 +81,18 @@ $(document).ready(() => {
                             success: function (data) {
                                 banner.hide();
 
+                                $("#exampleModalCenterTitle").text("Notifications");
+
                                 let message = 'You will be notified when the person is found!';
                                 if (!data.success) {
                                     message = 'This person is already being tracked!';
                                 }
 
                                 $("#notify").show();
-                                $("#notify").append(`<h3 class="display-3">${message}</h3>`);
+                                $("#notify>h3").text(message);
 
                                 setTimeout(() => {
-                                    $("#notify").innerHTML = '';
+                                    $("#notify>h3").text('');
                                     $("#faceModal").modal('hide');
                                 }, 2000);
                             },
@@ -122,6 +142,7 @@ $(document).ready(() => {
                 console.log(embeddings);
             },
             error: function (req, status, err) {
+                clearInputs();
                 console.log("something went wrong");
                 console.log(status);
                 console.log(err);
@@ -130,6 +151,16 @@ $(document).ready(() => {
         });
     });
 });
+
+function clearInputs() {
+    $("#faceForm").trigger("reset");
+    $("#submitBtn").removeClass('btn-danger');
+    $("#submitBtn").attr('value', "Find them!");
+    $("#faceFile").val('');
+    $(".thumbnail").remove();
+    $("#faceFileLabel").text('Choose a file...');
+    file = null;
+}
 
 function checkChanged(e) {
     const button = $("#submitBtn");
