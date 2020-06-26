@@ -24,7 +24,7 @@ aspNetServerUrl = "http://shadowerweb.azurewebsites.net/Home/AddPost"
 
 while True:
 #for i in range(5):
-    imagePath = f'./image.jpg'
+    imagePath = f'./imagee.jpg'
     
     camera.capture(imagePath)
     
@@ -52,9 +52,11 @@ while True:
             'embeddings' : embeddings,
             'link' : link
         }        
-        #response = requests.post(aspNetServerUrl, data, files)
+        response = requests.post(aspNetServerUrl, data, files)
         
-        break
+        print(response.text)
+        
+        #break
     
     os.remove(imagePath)
     
